@@ -10,7 +10,6 @@
 #include "./voice.cpp"
 
 
-
 using json = nlohmann::json;
 
 typedef std::string Str;
@@ -19,6 +18,7 @@ typedef std::string Str;
     "todo": {
       "topic": "吃早餐",
       "date": "Fri Jan 15 2021 06:30:00 GMT+0800 (中国标准时间)",
+	  			星期 月 日  年   时间
       "active": false,
       "due": "Fri Jan 15 2021 06:31:00 GMT+0800 (中国标准时间)",
       "detail": "一晚上没睡觉"
@@ -29,8 +29,11 @@ typedef std::string Str;
 
 void PrintTodoJson(New todo)
 {
+	std::string pattern{"(\\d{4})-(0\\d{1}|1[0-2])-(0\\d{1}|[12]\\d{1}|3[01])\\s(0\\d{1}|1\\d{1}|2[0-3]):[0-5]\\d{1}:([0-5]\\d{1})"};
+	std::regex re(pattern);
 	std::cout << "标题:" << todo.topic << std::endl;
 	std::cout <<  "描述:"<< todo.detail << std::endl;
+	todo.date = std::regex_search(todo.date,re);
 	std::cout <<  "开始时间:"<< todo.date << std::endl;
 	std::cout <<  "结束时间:"<< todo.due << std::endl;
 	std::cout << std::endl;
@@ -93,7 +96,6 @@ void reads(const char *FileName)
 	do{
 		file.get(stc);
 
-
 		if(stc == '[') continue;
 		if(stc == '}') chrSize--;
 
@@ -109,7 +111,6 @@ void reads(const char *FileName)
 
 			oss.str("");  //清空
 			continue;
-			usleep(10000);
 		}
 		oss << stc;
 	}while(file.good() && !file.eof());
