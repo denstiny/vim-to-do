@@ -13,7 +13,7 @@ int main()
 	tt+= 8*3600;
 	tm *ts = gmtime(&tt);
 
-	printf("%d-%d-%d %d:%d:%d\n",ts->tm_year+1900,ts->tm_mon,ts->tm_mday+1,ts->tm_hour,ts->tm_min,ts->tm_sec);
+	printf("%d-%d-%d %d:%d:%d\n",ts->tm_year+1900,ts->tm_mon+1,ts->tm_mday+1,ts->tm_hour,ts->tm_min,ts->tm_sec);
 
     return 0;
 }

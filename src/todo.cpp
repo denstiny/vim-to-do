@@ -1,6 +1,8 @@
 // 处理json数据
+#include <cstdio>
 #include <cstring>
 #include<regex>
+#include <string>
 #include<typeinfo>
 #include<fstream>
 #include<iostream>
@@ -27,15 +29,45 @@ typedef std::string Str;
 
 	 * */
 
+Da Date(std::string date)
+{
+
+	Da time;
+	std::string str;
+	std::string Weekpattern{"^(\\D{3}) "};
+	std::string pattern{"^\\D{3}.(\\D{3}).(\\d{2}).(\\d{4}).(\\d{2}):(\\d{2}):(\\d{2})"};
+
+	std::regex re(pattern);
+	std::regex res(Weekpattern);
+	std::smatch Weekres;
+
+	std::regex_search(date,Weekres,res);
+
+	// Dec 18 2021 22:15:00
+	std::regex_search(date,Weekres,re);
+	time.Y = Weekres[3];
+	time.M = Weekres[1];
+	for(int i = 0;i < 12;i++)
+		if(time.M == MONTH[i])
+			time.M = std::to_string(i);
+	time.D = Weekres[2];
+	time.H = Weekres[4];
+	time.m = Weekres[5];
+	time.s = Weekres[6];
+	return time;
+}
 void PrintTodoJson(New todo)
 {
-	std::string pattern{"(\\d{4})-(0\\d{1}|1[0-2])-(0\\d{1}|[12]\\d{1}|3[01])\\s(0\\d{1}|1\\d{1}|2[0-3]):[0-5]\\d{1}:([0-5]\\d{1})"};
-	std::regex re(pattern);
 	std::cout << "标题:" << todo.topic << std::endl;
 	std::cout <<  "描述:"<< todo.detail << std::endl;
-	todo.date = std::regex_search(todo.date,re);
-	std::cout <<  "开始时间:"<< todo.date << std::endl;
-	std::cout <<  "结束时间:"<< todo.due << std::endl;
+	
+	Da data = Date(todo.date);
+	std::cout << "开始时间:" << data.Y << ' ' << data.M  << ' '<< data.D << ' ' << data.H << ' ' << data.m << data.s << std::endl;
+
+	//std::cout <<  "结束时间:"<< todo.due << std::endl;
+	
+	Da due = Date(todo.due);
+	std::cout << "结束时间：" << data.Y << data.M << data.D << data.H << data.m << data.s << std::endl;
 	std::cout << std::endl;
 	Maxmain(todo);
 }
@@ -44,26 +76,26 @@ void PrintTodoJson(New todo)
 New RegexMaset(std::string str)
 
 {
-   std::string tempstr;
-   nlohmann::json tempJson = json::parse(str,nullptr,false);
+	std::string tempstr;
+	nlohmann::json tempJson = json::parse(str,nullptr,false);
 
-   New todo;
+	New todo;
 
-   if(tempJson["todo"]["topic"].is_string())
-   	todo.topic  = tempJson["todo"]["topic"];
+	if(tempJson["todo"]["topic"].is_string())
+		todo.topic  = tempJson["todo"]["topic"];
 
-   if(tempJson["todo"]["detail"].is_string())
-   	todo.detail = tempJson["todo"]["detail"];
+	if(tempJson["todo"]["detail"].is_string())
+		todo.detail = tempJson["todo"]["detail"];
 
 
-   if(tempJson["todo"]["date"].is_string())
-   	todo.date   = tempJson["todo"]["date"];
+	if(tempJson["todo"]["date"].is_string())
+		todo.date   = tempJson["todo"]["date"];
 
-   if(tempJson["todo"]["due"].is_string())
-   	todo.due    = tempJson["todo"]["due"];
-   PrintTodoJson(todo);
+	if(tempJson["todo"]["due"].is_string())
+		todo.due    = tempJson["todo"]["due"];
+	PrintTodoJson(todo);
 
-   return todo;
+	return todo;
 }
 
 int pairing(char stc)
@@ -84,7 +116,7 @@ void reads(const char *FileName)
 	char stc;
 	file.open(FileName,std::ios::in); // open coc-todolist-data json file
 
-	
+
 	std::cout << "star" << std::endl;
 	std::string str;
 
