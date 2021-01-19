@@ -15,19 +15,6 @@
 using json = nlohmann::json;
 
 typedef std::string Str;
-	/* {
-    "uid": "405989d0-80d2-4ba7-8b1a-4cb36a280ee0",
-    "todo": {
-      "topic": "吃早餐",
-      "date": "Fri Jan 15 2021 06:30:00 GMT+0800 (中国标准时间)",
-	  			星期 月 日  年   时间
-      "active": false,
-      "due": "Fri Jan 15 2021 06:31:00 GMT+0800 (中国标准时间)",
-      "detail": "一晚上没睡觉"
-    }
-  }
-
-	 * */
 
 Da Date(std::string date)
 {
@@ -80,6 +67,19 @@ New RegexMaset(std::string str)
 	nlohmann::json tempJson = json::parse(str,nullptr,false);
 
 	New todo;
+	/*tood {
+    "uid": "405989d0-80d2-4ba7-8b1a-4cb36a280ee0",
+    "todo": {
+      "topic": "吃早餐",
+      "date": "Fri Jan 15 2021 06:30:00 GMT+0800 (中国标准时间)",
+	  			星期 月 日  年   时间
+      "active": false,
+      "due": "Fri Jan 15 2021 06:31:00 GMT+0800 (中国标准时间)",
+      "detail": "一晚上没睡觉"
+    }
+  }
+
+	 * */
 
 	if(tempJson["todo"]["topic"].is_string())
 		todo.topic  = tempJson["todo"]["topic"];
