@@ -15,5 +15,7 @@ int main()
 
 	printf("%d-%d-%d %d:%d:%d\n",ts->tm_year+1900,ts->tm_mon+1,ts->tm_mday+1,ts->tm_hour,ts->tm_min,ts->tm_sec);
 
+	//2021-1-21 14:38:25
+
     return 0;
 }

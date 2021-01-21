@@ -21,7 +21,7 @@ void Remind()
 {
 	char *shell = (char *)malloc(sizeof(char)*BUFSIZ);
 
-	sprintf(shell, "%s%s%s",VOIDO," ",VOIDOFILE);
+	sprintf(shell, "%s%s%s >/dev/null 2>&1",VOIDO," ",VOIDOFILE);
 
 	std::cout << shell << std::endl;
 

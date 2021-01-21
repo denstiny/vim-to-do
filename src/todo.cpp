@@ -1,5 +1,6 @@
 // 处理json数据
 #include <cstdio>
+#include <cstdlib>
 #include <cstring>
 #include<regex>
 #include <string>
@@ -36,12 +37,45 @@ Da Date(std::string date)
 	time.M = Weekres[1];
 	for(int i = 0;i < 12;i++)
 		if(time.M == MONTH[i])
-			time.M = std::to_string(i);
+			time.M = std::to_string(i+1);
 	time.D = Weekres[2];
 	time.H = Weekres[4];
 	time.m = Weekres[5];
 	time.s = Weekres[6];
 	return time;
+}
+void TimeTask(Da date,Da due,New todo)
+{
+
+	  //Sat Dec 18 2021 22:15:00
+
+		time_t tt;
+	time(&tt);
+	tt+= 8*3600;
+	tm *ts = gmtime(&tt);
+
+	printf("%d-%d-%d %d:%d:%d\n",ts->tm_year+1900,ts->tm_mon+1,ts->tm_mday,ts->tm_hour,ts->tm_min,ts->tm_sec);
+
+	 //2021-1-21 14:38:25
+
+
+	printf("%d-%d-%d %d:%d:%d\n",std::stoi(date.Y),std::stoi(date.M),std::stoi(date.D),std::stoi(date.H),std::stoi(date.m),std::stoi(date.s));
+	  if( 		 std::stoi(date.Y) == ts->tm_year+1900 
+			  && std::stoi(date.M) == ts->tm_mon+1
+			  && std::stoi(date.D) == ts->tm_mday
+			  && std::stoi(date.H) == ts->tm_hour
+			  //&& date.m == std::to_string(ts->tm_min)
+			  )
+	  {
+		char *shell =(char *) malloc(sizeof(char)*BUFSIZ);
+		sprintf(shell, "%s \"%s\" \"%s\"",
+				SED,
+				todo.topic.c_str(),
+				todo.detail.c_str());
+		std::cout << "测试" <<shell << std::endl;
+		SYS(shell);
+	  }
+	//Maxmain(todo);
 }
 void PrintTodoJson(New todo)
 {
@@ -49,24 +83,28 @@ void PrintTodoJson(New todo)
 	std::cout <<  "描述:"<< todo.detail << std::endl;
 	
 	Da data = Date(todo.date);
-	std::cout << "开始时间:" << data.Y << ' ' << data.M  << ' '<< data.D << ' ' << data.H << ' ' << data.m << data.s << std::endl;
+	std::cout << "开始时间: " << data.Y << ' ' << data.M  << ' '<< data.D << ' ' << data.H << ' ' << data.m << data.s << std::endl;
 
 	//std::cout <<  "结束时间:"<< todo.due << std::endl;
 	
 	Da due = Date(todo.due);
-	std::cout << "结束时间：" << data.Y << data.M << data.D << data.H << data.m << data.s << std::endl;
+	std::cout << "结束时间: " << data.Y << ' ' << data.M << ' ' << data.D << ' ' << data.H << ' ' << data.m << data.s << std::endl;
 	std::cout << std::endl;
-	Maxmain(todo);
+
+	TimeTask(data,due,todo);
+
 }
 
 
-New RegexMaset(std::string str)
+New* RegexMaset(std::string str)
 
 {
 	std::string tempstr;
+	if(str.length() == 0)
+		return nullptr;
 	nlohmann::json tempJson = json::parse(str,nullptr,false);
 
-	New todo;
+	New *todo = new New;
 	/*tood {
     "uid": "405989d0-80d2-4ba7-8b1a-4cb36a280ee0",
     "todo": {
@@ -82,19 +120,19 @@ New RegexMaset(std::string str)
 	 * */
 
 	if(tempJson["todo"]["topic"].is_string())
-		todo.topic  = tempJson["todo"]["topic"];
+		todo->topic  = tempJson["todo"]["topic"];
 
 	if(tempJson["todo"]["detail"].is_string())
-		todo.detail = tempJson["todo"]["detail"];
+		todo->detail = tempJson["todo"]["detail"];
 
 
 	if(tempJson["todo"]["date"].is_string())
-		todo.date   = tempJson["todo"]["date"];
+		todo->date   = tempJson["todo"]["date"];
 
 	if(tempJson["todo"]["due"].is_string())
-		todo.due    = tempJson["todo"]["due"];
-	PrintTodoJson(todo);
-
+		todo->due    = tempJson["todo"]["due"];
+	PrintTodoJson(*todo);
+	delete todo;
 	return todo;
 }
 
@@ -150,7 +188,7 @@ void reads(const char *FileName)
 	file.close();
 }
 
-int main(int argc , char *argv[])
+int TodoMain(int argc , char *argv[])
 {
 	char *args = new char[1024];
 	if(argc < 2)
@@ -158,7 +196,7 @@ int main(int argc , char *argv[])
 		strcpy(args,"/home/aercn/.config/coc/extensions/coc-todolist-data/coc-todolist.json");
 		argv[1] = args;
 	}
-	reads(args);
+	reads(argv[1]);
 
 	delete [] args;
 	return 0;

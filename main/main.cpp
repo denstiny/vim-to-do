@@ -1,7 +1,9 @@
 #include<stdio.h>
 #include <stdlib.h>
+#include "../src/todo.cpp"
 int main()
 {
-	printf("hello wrold\n");
+
+	TodoMain(, char **argv)
 	return 0;
 }

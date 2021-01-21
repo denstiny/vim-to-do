@@ -10,6 +10,7 @@
 #define VOIDOCONFIG true
 #define VOIDOFILE "/mnt/home/todo-list/src/material/keli.mp3"
 #define SYS system
+#define SED "notify-send"
 typedef std::string Str;
 typedef struct Todo
 {
@@ -30,5 +31,6 @@ typedef struct date
 }Da;
 
 const std::string MONTH[12]={"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+
 
 #endif

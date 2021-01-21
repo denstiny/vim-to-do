@@ -18,6 +18,7 @@
 	  cout << Weekres[0] << endl;
 	  regex_search(str,Weekres,Monthre);
 	  string a = Weekres[0];
+	  //Sat Dec 18 2021 22:15:00
 	  cout << a << endl;
 
 
