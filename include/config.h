@@ -5,7 +5,7 @@
 #include <string>
 #define Lang  "--english-speed"
 #define EKHO "ekho -v Cantonese "
-#define EKHOCOFIG false
+#define EKHOCOFIG true
 #define VOIDO "mpg123"
 #define VOIDOCONFIG true
 #define VOIDOFILE "/mnt/home/todo-list/src/material/keli.mp3"
