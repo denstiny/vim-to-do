@@ -3,15 +3,32 @@
 
 
 #include <string>
+
+
+
+
+
+
 #define Lang  "--english-speed"
 #define EKHO "ekho -v Cantonese "
-#define EKHOCOFIG true
+#define EKHOCOFIG false
 #define VOIDO "mpg123"
-#define VOIDOCONFIG true
+#define VOIDOCONFIG false
 #define VOIDOFILE "/mnt/home/todo-list/src/material/keli.mp3"
 #define SYS system
 #define SED "notify-send"
+
+
+
+
+
+
+
+
+
+
 typedef std::string Str;
+
 
 typedef struct date
 {
