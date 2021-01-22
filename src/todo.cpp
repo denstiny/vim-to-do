@@ -15,6 +15,43 @@ using json = nlohmann::json;
 
 typedef std::string Str;
 
+void TimeTask(New *todo)
+
+{
+
+	  //Sat Dec 18 2021 22:15:00
+
+	time_t tt;
+	time(&tt);
+	tt+= 8*3600;
+	tm *ts = gmtime(&tt);
+
+	printf("%d-%d-%d %d:%d:%d\n",ts->tm_year+1900,ts->tm_mon+1,ts->tm_mday,ts->tm_hour,ts->tm_min,ts->tm_sec);
+
+	 //2021-1-21 14:38:25
+
+
+	printf("%d-%d-%d %d:%d:%d\n",std::stoi(todo->te.Y),std::stoi(todo->te.M),std::stoi(todo->te.D),std::stoi(todo->te.H),std::stoi(todo->te.m),std::stoi(todo->te.s));
+
+
+
+	  if( 		 std::stoi(todo->te.Y) == ts->tm_year+1900 
+			  && std::stoi(todo->te.M) == ts->tm_mon+1
+			  && std::stoi(todo->te.D) == ts->tm_mday
+			  && std::stoi(todo->te.H) == ts->tm_hour
+			  && todo->te.m == std::to_string(ts->tm_min)
+			  )
+	  {
+		char *shell =(char *) malloc(sizeof(char)*BUFSIZ);
+		sprintf(shell, "%s \"%s\" \"%s\"",
+				SED,
+				todo->topic.c_str(),
+				todo->detail.c_str());
+		SYS(shell);
+		Maxmain(*todo);
+	  }
+}
+
 Da Date(std::string date)
 {
 
@@ -42,21 +79,21 @@ Da Date(std::string date)
 	time.s = Weekres[6];
 	return time;
 }
-void PrintTodoJson(New todo)
+void PrintTodoJson(New *todo)
 {
-	std::cout << "标题:" << todo.topic << std::endl;
-	std::cout <<  "描述:"<< todo.detail << std::endl;
+//	std::cout << "标题:" << todo.topic << std::endl;
+//	std::cout <<  "描述:"<< todo.detail << std::endl;
 	
-	Da data = Date(todo.date);
-	todo.te = data;
+	Da data = Date(todo->date);
+	todo->te = data;
 	//std::cout << "开始时间: " << data.Y << ' ' << data.M  << ' '<< data.D << ' ' << data.H << ' ' << data.m << data.s << std::endl;
 
 	//std::cout <<  "结束时间:"<< todo.due << std::endl;
 	
-	Da due = Date(todo.due);
-	todo.de = due;
-	std::cout << "结束时间: " << data.Y << ' ' << data.M << ' ' << data.D << ' ' << data.H << ' ' << data.m << data.s << std::endl;
-	std::cout << std::endl;
+	Da due = Date(todo->due);
+	todo->de = due;
+//	std::cout << "结束时间: " << data.Y << ' ' << data.M << ' ' << data.D << ' ' << data.H << ' ' << data.m << data.s << std::endl;
+//	std::cout << std::endl;
 }
 
 Str reads(std::ifstream &file)
@@ -126,50 +163,56 @@ New* RegexMaset(std::string str)
 	//PrintTodoJson(*todo);
 	return todo;
 }
+
+long FileSize(std::ifstream &ifs)
+{
+  	long tmppos;
+    long respos;
+    tmppos=ifs.tellg();//先保存最初位置
+    ifs.seekg(0,std::ios::end);//将指针移到未见末尾
+    respos=ifs.tellg();//保存末尾位置，即为文件大小
+    ifs.seekg(tmppos,std::ios::beg);//恢复文件指针
+    return respos;  //返回文件大小
+}
+
 int main(int argc , char *argv[])
 {
 	char *args = new char[1024];
+	long FileLong = 0;
 	if(argc < 2)
 	{
 		strcpy(args,"/home/aercn/.config/coc/extensions/coc-todolist-data/coc-todolist.json");
 		argv[1] = args;
 	}
 	std::ifstream file;
-	file.open(argv[1],std::ios::in); // open coc-todolist-data json file
-	std::cout << "star" << std::endl;
 	New *root = nullptr,*temp = nullptr;
-	Str str;
-	while(!file.eof())
+	file.open(argv[1],std::ios::in); // open coc-todolist-data json file
+	while(1)
 	{
-		str= reads(file);
-		New *todo = new New;
-		todo = RegexMaset(str);
-		if(todo == nullptr)
-			break;
-		PrintTodoJson(*todo);
-		if(root == nullptr)
+
+		file.open(argv[1],std::ios::in); // open coc-todolist-data json file
+		// 设置指针到文件的开头
+	  	file.clear(std::ios::goodbit);
+	  	file.seekg(std::ios::beg);
+
+		if(FileLong != FileSize(file))
 		{
-			root=todo;
-			root->next = nullptr;
+			std::cout << "start "<< std::endl;
+			FileLong = FileSize(file);
+			Str str = reads(file);
+			New *todo = new New;
+			todo = RegexMaset(str);
+			if(todo == nullptr)
+			{
+				delete todo;
+				continue;
+			}
+			PrintTodoJson(todo);
+			TimeTask(todo);
+			delete todo;
 		}
-		else
-		{
-			temp->next = todo;
-			todo->next = nullptr;
-		}
-		temp = todo;
-		//std::cout << todo->topic << std::endl;
+		usleep(1000000);
 	}
-	if(root!=nullptr)  // 段错误
-		while(root != nullptr)
-		{
-			usleep(1000000);
-			std::cerr << root->topic << std::endl;
-			root=root->next;
-		}
-	else
-		std::cout << "root is nullptr" << std::endl;
 	delete [] args;
-	file.close();
 	return 0;
 }

@@ -12,13 +12,6 @@
 #define SYS system
 #define SED "notify-send"
 typedef std::string Str;
-typedef struct Todo
-{
-	Str topic,  // 标题 string
- 		date,   // 开始时间
-		due,    // 结束时间
-		detail; // 事件描述
-}New;
 
 typedef struct date
 {
@@ -29,6 +22,16 @@ typedef struct date
 		m,
 		s;
 }Da;
+typedef struct Todo
+{
+	Str topic,  // 标题 string
+ 		date,   // 开始时间
+		due,    // 结束时间
+		detail; // 事件描述
+	Da te,de;
+	bool todo;  
+	struct Todo *next;
+}New;
 
 const std::string MONTH[12]={"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
 
