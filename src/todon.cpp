@@ -1,3 +1,4 @@
+// 处理json数据
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -10,6 +11,7 @@
 
 #include "../include/json.hpp"
 #include "./voice.cpp"
+
 
 using json = nlohmann::json;
 
@@ -42,51 +44,57 @@ Da Date(std::string date)
 	time.s = Weekres[6];
 	return time;
 }
+void TimeTask(Da date,Da due,New todo)
+{
+
+	  //Sat Dec 18 2021 22:15:00
+
+		time_t tt;
+	time(&tt);
+	tt+= 8*3600;
+	tm *ts = gmtime(&tt);
+
+	printf("%d-%d-%d %d:%d:%d\n",ts->tm_year+1900,ts->tm_mon+1,ts->tm_mday,ts->tm_hour,ts->tm_min,ts->tm_sec);
+
+	 //2021-1-21 14:38:25
+
+
+	printf("%d-%d-%d %d:%d:%d\n",std::stoi(date.Y),std::stoi(date.M),std::stoi(date.D),std::stoi(date.H),std::stoi(date.m),std::stoi(date.s));
+	  if( 		 std::stoi(date.Y) == ts->tm_year+1900 
+			  && std::stoi(date.M) == ts->tm_mon+1
+			  && std::stoi(date.D) == ts->tm_mday
+			  && std::stoi(date.H) == ts->tm_hour
+			  //&& date.m == std::to_string(ts->tm_min)
+			  )
+	  {
+		char *shell =(char *) malloc(sizeof(char)*BUFSIZ);
+		sprintf(shell, "%s \"%s\" \"%s\"",
+				SED,
+				todo.topic.c_str(),
+				todo.detail.c_str());
+		std::cout << "测试" <<shell << std::endl;
+		SYS(shell);
+	  }
+	//Maxmain(todo);
+}
 void PrintTodoJson(New todo)
 {
 	std::cout << "标题:" << todo.topic << std::endl;
 	std::cout <<  "描述:"<< todo.detail << std::endl;
 	
 	Da data = Date(todo.date);
-	todo.te = data;
-	//std::cout << "开始时间: " << data.Y << ' ' << data.M  << ' '<< data.D << ' ' << data.H << ' ' << data.m << data.s << std::endl;
+	std::cout << "开始时间: " << data.Y << ' ' << data.M  << ' '<< data.D << ' ' << data.H << ' ' << data.m << data.s << std::endl;
 
 	//std::cout <<  "结束时间:"<< todo.due << std::endl;
 	
 	Da due = Date(todo.due);
-	todo.de = due;
 	std::cout << "结束时间: " << data.Y << ' ' << data.M << ' ' << data.D << ' ' << data.H << ' ' << data.m << data.s << std::endl;
 	std::cout << std::endl;
-}
 
-Str reads(std::ifstream &file)
-{
-	std::ostringstream oss;
-	char stc;
-	Str str;
-	int chrSize = 2;
-	do{
-		file.get(stc);
-
-		if(stc == '[') continue;
-		if(stc == '}') chrSize--;
-
-
-
-		if(chrSize == 0 && stc == ',' || stc == ']')
-		{
-			chrSize = 2;
-
-			str = oss.str();
-
-			return str;
-			oss.str("");  //清空
-		}
-		oss << stc;
-	}while(file.good() && !file.eof());
-	return str;
+	TimeTask(data,due,todo);
 
 }
+
 
 New* RegexMaset(std::string str)
 
@@ -123,10 +131,64 @@ New* RegexMaset(std::string str)
 
 	if(tempJson["todo"]["due"].is_string())
 		todo->due    = tempJson["todo"]["due"];
-	//PrintTodoJson(*todo);
+	PrintTodoJson(*todo);
+	delete todo;
 	return todo;
 }
-int main(int argc , char *argv[])
+
+int pairing(char stc)
+{
+	if(stc == '{')
+		return 1;
+	else if(stc == '}')
+		return -1;
+	return 0;
+}
+
+
+void reads(const char *FileName)
+{
+	std::ifstream file;
+
+
+	char stc;
+	file.open(FileName,std::ios::in); // open coc-todolist-data json file
+
+
+	std::cout << "star" << std::endl;
+	std::string str;
+
+	std::ios_base::sync_with_stdio(false);
+	int chrSize = 2;
+
+	std::ostringstream oss;
+
+	do{
+		file.get(stc);
+
+		if(stc == '[') continue;
+		if(stc == '}') chrSize--;
+
+
+
+		if(chrSize == 0 && stc == ',' || stc == ']')
+		{
+			chrSize = 2;
+
+			str = oss.str();
+
+			RegexMaset(str);
+
+			oss.str("");  //清空
+			continue;
+		}
+		oss << stc;
+	}while(file.good() && !file.eof());
+
+	file.close();
+}
+
+int TodoMain(int argc , char *argv[])
 {
 	char *args = new char[1024];
 	if(argc < 2)
@@ -134,42 +196,8 @@ int main(int argc , char *argv[])
 		strcpy(args,"/home/aercn/.config/coc/extensions/coc-todolist-data/coc-todolist.json");
 		argv[1] = args;
 	}
-	std::ifstream file;
-	file.open(argv[1],std::ios::in); // open coc-todolist-data json file
-	std::cout << "star" << std::endl;
-	New *root = nullptr,*temp = nullptr;
-	Str str;
-	while(!file.eof())
-	{
-		str= reads(file);
-		New *todo = new New;
-		todo = RegexMaset(str);
-		if(todo == nullptr)
-			break;
-		PrintTodoJson(*todo);
-		if(root == nullptr)
-		{
-			root=todo;
-			root->next = nullptr;
-		}
-		else
-		{
-			temp->next = todo;
-			todo->next = nullptr;
-		}
-		temp = todo;
-		//std::cout << todo->topic << std::endl;
-	}
-	if(root!=nullptr)  // 段错误
-		while(root != nullptr)
-		{
-			usleep(1000000);
-			std::cerr << root->topic << std::endl;
-			root=root->next;
-		}
-	else
-		std::cout << "root is nullptr" << std::endl;
+	reads(argv[1]);
+
 	delete [] args;
-	file.close();
 	return 0;
 }
