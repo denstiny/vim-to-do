@@ -168,14 +168,14 @@ long FileSize(std::ifstream &ifs)
 {
   	long tmppos;
     long respos;
-    tmppos=ifs.tellg();//先保存最初位置
-    ifs.seekg(0,std::ios::end);//将指针移到未见末尾
-    respos=ifs.tellg();//保存末尾位置，即为文件大小
-    ifs.seekg(tmppos,std::ios::beg);//恢复文件指针
-    return respos;  //返回文件大小
+    tmppos=ifs.tellg();
+    ifs.seekg(0,std::ios::end);
+    respos=ifs.tellg();
+    ifs.seekg(tmppos,std::ios::beg);
+    return respos; 
 }
 
-int main(int argc , char *argv[])
+int TodoMain(int argc , char *argv[])
 {
 	char *args = new char[1024];
 	long FileLong = 0;

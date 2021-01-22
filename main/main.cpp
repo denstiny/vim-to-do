@@ -5,10 +5,6 @@
 int main(int argc,char *argv[])
 {
 
-	while(1)
-	{
-		TodoMain(argc,argv);
-		usleep(12000);
-	}
+	TodoMain(argc,argv);
 	return 0;
 }
