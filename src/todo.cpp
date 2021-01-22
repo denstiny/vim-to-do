@@ -43,10 +43,21 @@ void TimeTask(New *todo)
 			  )
 	  {
 		char *shell =(char *) malloc(sizeof(char)*BUFSIZ);
-		sprintf(shell, "%s \"%s\" \"%s\"",
+		sprintf(shell, "%s \"%s\" \"%s \n开始时间:%s-%s-%s\n结束时间:%s-%s-%s\"",
 				SED,
 				todo->topic.c_str(),
-				todo->detail.c_str());
+				todo->detail.c_str(),
+				todo->te.H.c_str(),
+				todo->te.m.c_str(),
+				todo->te.s.c_str(),
+				todo->de.H.c_str(),
+				todo->de.m.c_str(),
+				todo->de.s.c_str()
+				);
+
+ 		//date,   // 开始时间
+		//due,    // 结束时间
+		std::cout << shell << std::endl;
 		SYS(shell);
 		Maxmain(*todo);
 	  }
@@ -211,6 +222,7 @@ int TodoMain(int argc , char *argv[])
 			TimeTask(todo);
 			delete todo;
 		}
+		file.close();
 		usleep(1000000);
 	}
 	delete [] args;

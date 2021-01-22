@@ -5,6 +5,7 @@
 int main(int argc,char *argv[])
 {
 
+	SYS("notify-send \"to do list\" ");
 	TodoMain(argc,argv);
 	return 0;
 }

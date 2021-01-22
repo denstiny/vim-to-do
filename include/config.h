@@ -13,10 +13,10 @@
 #define EKHO "ekho -v Cantonese "
 #define EKHOCOFIG false
 #define VOIDO "mpg123"
-#define VOIDOCONFIG false
+#define VOIDOCONFIG true
 #define VOIDOFILE "/mnt/home/todo-list/src/material/keli.mp3"
 #define SYS system
-#define SED "notify-send"
+#define SED "notify-send -t 60000"
 
 
 

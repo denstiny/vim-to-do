@@ -30,7 +30,7 @@ void Remind()
 }
 int Maxmain(New todo)
 {
-	if(EKHOCOFIG)
+	if(EKHOCOFIG == true)
 	{
 		char *shell = (char *)malloc(sizeof(char)*BUFSIZ);
 		//  语音播报
@@ -39,7 +39,7 @@ int Maxmain(New todo)
 		voice(shell);
 		delete shell;
 	}
-	if(VOIDOCONFIG)
+	if(VOIDOCONFIG == true)
 		Remind();
 		// 铃声提醒
 	return 0;
