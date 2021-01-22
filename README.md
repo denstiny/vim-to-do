@@ -1,5 +1,6 @@
 ## todo-list
 ![github.svg](./src/material/badge.svg)  
+  
 > 我是一名c++新手，我对vim非常喜欢，偶然看到这个插件`coc-todolist`
 > 他可以帮助我管理时间，他是非常友好的，可以同步到你的github，但
 > 是我不可能永远打开vim，也不可能一直盯着vim是否给我提醒，所以
@@ -12,6 +13,8 @@
 <i> 这是一个coc-todolist的扩展工具，他是完全使用c语言实现的
 你可以非常简单的使用他，但是前提你得拥有coc-todolist</i>
 [coc-todolist](https://github.com/voldikss/coc-todolist)
+
+![vim.gif](https://i.loli.net/2021/01/22/5ItjEyLrk6AUQ3J.gif)
 
 ## 安装
 ```shell
