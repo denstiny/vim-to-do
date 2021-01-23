@@ -25,13 +25,15 @@ void TimeTask(New *todo)
 	time(&tt);
 	tt+= 8*3600;
 	tm *ts = gmtime(&tt);
+	char *tts = new char[BUFSIZ];
 
-	printf("%d-%d-%d %d:%d:%d\n",ts->tm_year+1900,ts->tm_mon+1,ts->tm_mday,ts->tm_hour,ts->tm_min,ts->tm_sec);
+	sprintf(tts,"当前时间 %d-%d-%d %d:%d:%d\n",ts->tm_year+1900,ts->tm_mon+1,ts->tm_mday,ts->tm_hour,ts->tm_min,ts->tm_sec);
+	std::cout << tts << std::endl;
 
 	 //2021-1-21 14:38:25
 
 
-	printf("%d-%d-%d %d:%d:%d\n",std::stoi(todo->te.Y),std::stoi(todo->te.M),std::stoi(todo->te.D),std::stoi(todo->te.H),std::stoi(todo->te.m),std::stoi(todo->te.s));
+	//printf("%d-%d-%d %d:%d:%d\n",std::stoi(todo->te.Y),std::stoi(todo->te.M),std::stoi(todo->te.D),std::stoi(todo->te.H),std::stoi(todo->te.m),std::stoi(todo->te.s));
 
 
 
@@ -40,8 +42,10 @@ void TimeTask(New *todo)
 			  && std::stoi(todo->te.D) == ts->tm_mday
 			  && std::stoi(todo->te.H) == ts->tm_hour
 			  && todo->te.m == std::to_string(ts->tm_min)
+			  && todo->todo == true
 			  )
 	  {
+		  todo->todo = false;
 		char *shell =(char *) malloc(sizeof(char)*BUFSIZ);
 		sprintf(shell, "%s \"%s\" \"%s \n开始时间:%s-%s-%s\n结束时间:%s-%s-%s\"",
 				SED,
@@ -103,6 +107,7 @@ void PrintTodoJson(New *todo)
 	
 	Da due = Date(todo->due);
 	todo->de = due;
+	todo->todo = true;
 //	std::cout << "结束时间: " << data.Y << ' ' << data.M << ' ' << data.D << ' ' << data.H << ' ' << data.m << data.s << std::endl;
 //	std::cout << std::endl;
 }
@@ -198,6 +203,45 @@ int TodoMain(int argc , char *argv[])
 	std::ifstream file;
 	New *root = nullptr,*temp = nullptr;
 	file.open(argv[1],std::ios::in); // open coc-todolist-data json file
+
+	while(root == nullptr)
+	{
+		if(FileLong < FileSize(file))
+		{
+			std::cout << "start "<< std::endl;
+			FileLong = FileSize(file);
+			while(!file.eof() && file.good())
+			{
+				Str str = reads(file);
+				New *todo = new New;
+				todo = RegexMaset(str);
+				if(todo == nullptr)
+				{
+					delete todo;
+					continue;
+				}
+				PrintTodoJson(todo);
+				if(root == nullptr)
+				{
+					root = todo;
+					root->next = nullptr;
+				}else{
+					temp->next = todo;
+					todo->next = nullptr;
+				}
+				temp = todo;
+			}
+			//TimeTask(todo);
+		}
+		usleep(1000000);
+	}
+	temp = root;
+	while(temp != nullptr)
+	{
+		std::cout << temp->topic << std::endl;
+		temp = temp->next;
+	}
+
 	while(1)
 	{
 
@@ -206,10 +250,11 @@ int TodoMain(int argc , char *argv[])
 	  	file.clear(std::ios::goodbit);
 	  	file.seekg(std::ios::beg);
 
-		if(FileLong != FileSize(file))
+		if(FileLong < FileSize(file))
 		{
 			std::cout << "start "<< std::endl;
 			FileLong = FileSize(file);
+
 			Str str = reads(file);
 			New *todo = new New;
 			todo = RegexMaset(str);
@@ -219,9 +264,21 @@ int TodoMain(int argc , char *argv[])
 				continue;
 			}
 			PrintTodoJson(todo);
-			TimeTask(todo);
-			delete todo;
+			temp = root;
+			while(temp->next != nullptr)
+				temp = temp->next;
+			temp->next = todo;
+			todo->next = nullptr;
+			//TimeTask(todo);
 		}
+		temp = root;
+		while(temp != nullptr)
+		{
+//			std::cout << temp->topic << std::endl;
+			TimeTask(temp);
+			temp = temp->next;
+		}
+
 		file.close();
 		usleep(1000000);
 	}
