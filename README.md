@@ -46,6 +46,12 @@ sudo apt install ekho
 # centos 
 sudo yum install ekho
 ```
+#####  更新日志
+
+*   第一次更新
+	* 解决启动卡顿  
+	* 解决无法检测多个代办任务 
+
 #### 贡献
 
 ##### <a href="https://github.com/zyl-hub"> zyl-hub <span>  <img border="0" src="https://avatars.githubusercontent.com/u/54789212?s=400&v=4" height="100" width="100" />
