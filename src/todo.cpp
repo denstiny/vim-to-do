@@ -47,7 +47,7 @@ void TimeTask(New *todo)
 	  {
 		  todo->todo = false;
 		char *shell =(char *) malloc(sizeof(char)*BUFSIZ);
-		sprintf(shell, "%s \"%s\" \"%s \n开始时间: %s:%s:%s\n结束时间:%s:%s:%s\"",
+		sprintf(shell, "%s \"%s\" \"%s \n开始时间: %s:%s:%s\n结束时间: %s:%s:%s\"",
 				SED,
 				todo->topic.c_str(),
 				todo->detail.c_str(),
