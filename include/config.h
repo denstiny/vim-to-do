@@ -46,7 +46,7 @@ typedef struct Todo
 		due,    // 结束时间
 		detail; // 事件描述
 	Da te,de;
-	bool todo;  
+	bool todo,active; // 状态
 	struct Todo *next;
 }New;
 

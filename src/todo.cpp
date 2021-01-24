@@ -43,6 +43,7 @@ void TimeTask(New *todo)
 			  && std::stoi(todo->te.H) == ts->tm_hour
 			  && todo->te.m == std::to_string(ts->tm_min)
 			  && todo->todo == true
+			  && todo->active
 			  )
 	  {
 		  todo->todo = false;
@@ -170,6 +171,8 @@ New* RegexMaset(std::string str)
 	if(tempJson["todo"]["detail"].is_string())
 		todo->detail = tempJson["todo"]["detail"];
 
+	if(tempJson["todo"]["active"].is_boolean())
+		todo->active = tempJson["todo"]["active"];
 
 	if(tempJson["todo"]["date"].is_string())
 		todo->date   = tempJson["todo"]["date"];
