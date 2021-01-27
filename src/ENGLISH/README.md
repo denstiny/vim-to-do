@@ -44,6 +44,8 @@ sudo yum install ekho
 	* Solve the problem of starting Caton  
 	* Solve the problem that multiple entrusted tasks cannot be detected
 	* Solve things without prompting
+> demo  
+![c__.gif](https://i.loli.net/2021/01/27/rqzKhXfGyYZBF3g.gif)
 #### Contribution
 ##### <a href="https://github.com/zyl-hub"> zyl-hub <span>  <img border="0" src="https://avatars.githubusercontent.com/u/54789212?s=400&v=4" height="100" width="100" />
 </a>

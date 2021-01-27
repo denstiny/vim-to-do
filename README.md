@@ -53,7 +53,8 @@ sudo yum install ekho
 	* 解决启动卡顿  
 	* 解决无法检测多个代办任务 
 	* 解决事件不提示
-
+> 演示
+![c__.gif](https://i.loli.net/2021/01/27/rqzKhXfGyYZBF3g.gif)
 #### 贡献
 
 ##### <a href="https://github.com/zyl-hub"> zyl-hub <span>  <img border="0" src="https://avatars.githubusercontent.com/u/54789212?s=400&v=4" height="100" width="100" />

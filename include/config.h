@@ -16,7 +16,12 @@
 #define VOIDOCONFIG true
 #define VOIDOFILE "/mnt/home/todo-list/src/material/keli.mp3"
 #define SYS system
+#define ICONCONFIG false
+#if ICONCONFIG==true
 #define SED "notify-send -t 60000"
+#else
+#define SED "notify-send -t 60000 -i /home/aercn/est.jpg"
+#endif
 
 
 
