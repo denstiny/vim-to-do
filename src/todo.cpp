@@ -173,6 +173,7 @@ New* RegexMaset(std::string str)
 
 	if(tempJson["todo"]["active"].is_boolean())
 		todo->active = tempJson["todo"]["active"];
+	//  添加 事件判断
 
 	if(tempJson["todo"]["date"].is_string())
 		todo->date   = tempJson["todo"]["date"];

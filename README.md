@@ -1,10 +1,11 @@
+[中文文档](https://github.com/denstiny/vim-to-do/blob/main/README.md) | [英文文档]()  
 ## todo-list
 ![github.svg](./src/material/badge.svg)  
   
 > 我是一名c++新手，我对vim非常喜欢，偶然看到这个插件`coc-todolist`
 > 他可以帮助我管理时间，他是非常友好的，可以同步到你的github，但
 > 是我不可能永远打开vim，也不可能一直盯着vim是否给我提醒，所以
-> 所以我给他做了一些补充，代码很粗糙，凑合者用吧
+> 所以我给他做了一些补充，因为我是新手，代码是粗糙的
 
 <BR>
 <br>
@@ -51,6 +52,7 @@ sudo yum install ekho
 *   第一次更新
 	* 解决启动卡顿  
 	* 解决无法检测多个代办任务 
+	* 解决事件不提示
 
 #### 贡献
 
