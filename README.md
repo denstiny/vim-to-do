@@ -1,4 +1,4 @@
-[中文文档](https://github.com/denstiny/vim-to-do/blob/main/README.md) | [英文文档](https://github.com/denstiny/vim-to-do/tree/main/src/ENGLISH)  
+[中文文档](https://github.com/denstiny/vim-to-do/blob/main/README.md) | [English](https://github.com/denstiny/vim-to-do/tree/main/src/ENGLISH)  
 ## todo-list
 ![github.svg](./src/material/badge.svg)  
   
