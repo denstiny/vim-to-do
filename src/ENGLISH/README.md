@@ -9,7 +9,6 @@ I’m the c++ novice,I like vim very much. Accidentally see this plug-in ` COC t
 <BR>
 <i> This is an extension tool of coc-todolist,it is implemented entirely in C language,you can use it very simply,but only if you have one coc-todolist</i>
 [coc-todolist](https://github.com/voldikss/coc-todolist)
-![vim.gif](https://i.loli.net/2021/01/22/5ItjEyLrk6AUQ3J.gif)
 ##  Fix 
 ```shell
 git clone https://github.com/denstiny/vim-to-do.git 
@@ -48,6 +47,7 @@ sudo yum install ekho
 ![c__.gif](https://i.loli.net/2021/01/27/rqzKhXfGyYZBF3g.gif)
 #### Contribution
 ##### <a href="https://github.com/zyl-hub"> zyl-hub <span>  <img border="0" src="https://avatars.githubusercontent.com/u/54789212?s=400&v=4" height="100" width="100" />
-</a>
+</a><br>
 
+####  Thank you [coc-todolist](https://github.com/voldikss/coc-todolist)
 

@@ -15,7 +15,6 @@
 你可以非常简单的使用他，但是前提你得拥有coc-todolist</i>
 [coc-todolist](https://github.com/voldikss/coc-todolist)
 
-![vim.gif](https://i.loli.net/2021/01/22/5ItjEyLrk6AUQ3J.gif)
 
 ## 安装
 ```shell
@@ -58,4 +57,5 @@ sudo yum install ekho
 #### 贡献
 
 ##### <a href="https://github.com/zyl-hub"> zyl-hub <span>  <img border="0" src="https://avatars.githubusercontent.com/u/54789212?s=400&v=4" height="100" width="100" />
-</a>
+</a> <br> 
+####  感谢[coc-todolist](https://github.com/voldikss/coc-todolist)
