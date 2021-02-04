@@ -1,4 +1,17 @@
-[中文文档](https://github.com/denstiny/vim-to-do/blob/main/README.md) | [English](https://github.com/denstiny/vim-to-do/tree/main/src/ENGLISH)  
+
+<!-- vim-markdown-toc GFM -->
+
+* [todo-list](#todo-list)
+* [安装](#安装)
+* [配置](#配置)
+	* [提示音](#提示音)
+			* [修改提示音效](#修改提示音效)
+			* [语音播报(英语可能有点别扭)](#语音播报英语可能有点别扭)
+* [更新日志](#更新日志)
+* [贡献](#贡献)
+
+<!-- vim-markdown-toc -->
+<font size=3>[中文文档](https://github.com/denstiny/vim-to-do/blob/main/README.md) | [English](https://github.com/denstiny/vim-to-do/tree/main/src/ENGLISH)</font>  
 ## todo-list
 ![github.svg](./src/material/badge.svg)  
   
@@ -24,7 +37,7 @@ make
 ```
 ## 配置
 他的配置文件是 `include/config.h`    
-#### 提示音
+### 提示音
 如果你需要提醒的时候带有提示音的效果，你需要修改config中的`VOIDOCONFIG` 参数，默认为`false`  关闭   
 ##### 修改提示音效
 ```c
@@ -34,7 +47,7 @@ make
 更改音频文件路径即可. <u>最好是小于三秒的音频，未做播放限制</u>  
 播放使用的是 [mpg123](https://github.com/dreamerc/mpg123) 开源项目  
 
-#### 语音播报(英语可能有点别扭)
+##### 语音播报(英语可能有点别扭)
 如果你需要语音播报 更改`EKHOCOFIG` 参数，默认为 `false` 关闭
 <u>使用的是[ekho](https://github.com/hgneng/ekho.git) 余音</u>  
 使用 linux 包管理器安装
@@ -46,16 +59,18 @@ sudo apt install ekho
 # centos 
 sudo yum install ekho
 ```
-#####  更新日志
+##  更新日志
 
-*   第一次更新
+* 2021-02-04 
+	* 添加结束时的提醒判断
+* 2021-02-01
 	* 解决启动卡顿  
 	* 解决无法检测多个代办任务 
 	* 解决事件不提示
 > 演示
 ![c__.gif](https://i.loli.net/2021/01/27/rqzKhXfGyYZBF3g.gif)
-#### 贡献
+## 贡献
 
-##### <a href="https://github.com/zyl-hub"> zyl-hub <span>  <img border="0" src="https://avatars.githubusercontent.com/u/54789212?s=400&v=4" height="100" width="100" />
+<font size=3><a href="https://github.com/zyl-hub"> zyl-hub <span>  <img border="0" src="https://avatars.githubusercontent.com/u/54789212?s=400&v=4" height="100" width="100" /></font>
 </a> <br> 
-####  感谢[coc-todolist](https://github.com/voldikss/coc-todolist)
+<font size=3>  感谢[coc-todolist](https://github.com/voldikss/coc-todolist)</font>

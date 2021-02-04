@@ -37,7 +37,7 @@ void TimeTask(New *todo)
 
 
 
-	  if( 		 std::stoi(todo->te.Y) == ts->tm_year+1900 
+	  if( 	  std::stoi(todo->te.Y) == ts->tm_year+1900 
 			  && std::stoi(todo->te.M) == ts->tm_mon+1
 			  && std::stoi(todo->te.D) == ts->tm_mday
 			  && std::stoi(todo->te.H) == ts->tm_hour
@@ -48,7 +48,37 @@ void TimeTask(New *todo)
 	  {
 		  todo->todo = false;
 		char *shell = new char [BUFSIZ];
-		sprintf(shell, "%s \"%s\" \"%s \n开始时间: %s:%s:%s\n结束时间: %s:%s:%s\"",
+		sprintf(shell, "%s \"%s\" \"%s \n开始时间: %s:%s:%s\n结束时间: %s:%s:%s\n任务开始\"",
+				SED,
+				todo->topic.c_str(),
+				todo->detail.c_str(),
+				todo->te.H.c_str(),
+				todo->te.m.c_str(),
+				todo->te.s.c_str(),
+				todo->de.H.c_str(),
+				todo->de.m.c_str(),
+				todo->de.s.c_str()
+				);
+
+ 		//date,   // 开始时间
+		//due,    // 结束时间
+		std::cout << shell << std::endl;
+		SYS(shell);
+		Maxmain(*todo);
+	  }
+
+	  if( 	  std::stoi(todo->de.Y) == ts->tm_year+1900 
+			  && std::stoi(todo->de.M) == ts->tm_mon+1
+			  && std::stoi(todo->de.D) == ts->tm_mday
+			  && std::stoi(todo->de.H) == ts->tm_hour
+			  && todo->de.m == std::to_string(ts->tm_min)
+			  && todo->end == true
+			  && todo->active
+			  )
+	  {
+		  todo->end = false;
+		char *shell = new char [BUFSIZ];
+		sprintf(shell, "%s \"%s\" \"%s \n开始时间: %s:%s:%s\n结束时间: %s:%s:%s\n任务结束\"",
 				SED,
 				todo->topic.c_str(),
 				todo->detail.c_str(),
@@ -109,6 +139,7 @@ void PrintTodoJson(New *todo)
 	Da due = Date(todo->due);
 	todo->de = due;
 	todo->todo = true;
+	todo->end = true;
 //	std::cout << "结束时间: " << data.Y << ' ' << data.M << ' ' << data.D << ' ' << data.H << ' ' << data.m << data.s << std::endl;
 //	std::cout << std::endl;
 }
