@@ -30,7 +30,14 @@
 
 
 ## 安装
+```
+
+```
+
 ```shell
+vim 
+:CocInstall coc-todolist
+
 git clone https://github.com/denstiny/vim-to-do.git 
 cd vim-to-do
 make

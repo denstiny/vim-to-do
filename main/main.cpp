@@ -1,7 +1,8 @@
-#include<stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include "../src/todo.cpp"
+#include <cstring>
 
 int main(int argc , char *argv[])
 {

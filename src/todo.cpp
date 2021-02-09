@@ -158,10 +158,11 @@ Str reads(std::ifstream &file)
 
 
 
-		if(chrSize == 0 && stc == ',' || stc == ']')
-		{
-			chrSize = 2;
 
+
+
+		if( chrSize == 0 && stc == ',' || stc == ']' )
+		{
 			str = oss.str();
 
 			return str;
